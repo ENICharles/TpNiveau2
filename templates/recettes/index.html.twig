@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Recettes
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <style>
+        h5
+        {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="row">
+        {% for recette in listRecettes %}
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{recette.nom}}
+                        {% if (recette.getEstFavori() == 1) %}
+                            <a href="{{ path('setfavorite_recettes', {'id': recette.id}) }}"><img src="{{ asset('pictures/favorite.png') }}" width="25"></a><br>
+                        {% else %}
+                            <a href="{{ path('setfavorite_recettes', {'id': recette.id}) }}"><img src="{{ asset('pictures/unfavorite.png') }}" width="25"></a><br>
+                        {% endif %}</h5>
+                        <a href="{{ path('showOneDetail_recettes', {'id': recette.id}) }}"><img src="{{ asset('pictures/recettes/' ~ recette.image) }}" height="200px" alt="{{ recette.nom }}" class="card-img-top"></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

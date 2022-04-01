@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Accueil
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <style>
+        a
+        {
+            text-decoration: none;
+        }
+        .accueil
+        {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="accueil">
+        <img src="{{ asset('pictures/philippe-etchebest-1200x720.jpg') }}" style="width: 50%">
+        <p><a href="{{ path('showAll_recettes') }}">"3, 2, 1 Recettes"</a></p>
+    </div>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+
