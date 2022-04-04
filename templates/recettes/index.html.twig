@@ -12,10 +12,63 @@
             text-align: center;
         }
     </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+
+        function filtre()
+        {
+            var tFav = document.getElementById('tFav').checked;
+            var tNom = document.getElementById('tNom').checked;
+            var req  = "";
+
+            //alert(tFav + " " + tNom);
+            $(document).ready(function ()
+            {
+                $.ajax(
+                {
+                    url: "/recettes/filtre",
+                    method: "GET",
+                    dataType: "text",
+                })
+
+                .done(function(response)
+                {
+                    let data = JSON.parse(response);
+                    //let data = JSON.stringify(response);
+
+                    {% listRecettes %}
+                    document.getElementById('test').innerText = data[0].nom;
+                })
+
+                .fail(function(error)
+                {
+                    //alert("pas de retour du serveur");
+                });
+            });
+        }
+    </script>
 {% endblock %}
 
+{% block header %}
+    {{ parent() }}
+    <div>
+        <label for="tFav">Filtre sur favories
+        <input type="checkbox" id="tFav" name="tFav" onclick="filtre()" value="tFav"></label>
+
+        <label for="tNom">Fitre par nom
+        <input type="checkbox" id="tNom" name="tNom" onclick="filtre()" value="tNom"></label>
+    </div>
+
+{% endblock %}
 
 {% block body %}
+    <div>
+
+        <label id="test"></label>
+
+    </div><br><br><br><br>
     <div class="row">
         {% for recette in listRecettes %}
             <div class="col-sm-3">

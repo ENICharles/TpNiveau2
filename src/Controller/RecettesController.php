@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 class RecettesController extends AbstractController
 {
     #[Route('/recettes', name: 'showAll_recettes')]
@@ -31,7 +36,7 @@ class RecettesController extends AbstractController
     #[Route('/recettes/favorite/{id}', name: 'setfavorite_recettes')]
     public function setfavorite(RecetteRepository $rr,EntityManagerInterface $em,Request $request,Recette $recette): Response
     {
-        dd("couqsdhqms " . $request->getBaseUrl());
+        $refere = $request->headers->get('referer');
 
         if($recette->getEstFavori() == 0)
         {
@@ -48,6 +53,21 @@ class RecettesController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('showOneDetail_recettes',['id'=>$recette->getId()]);
+        if(str_contains($refere,'details'))
+        {
+            return $this->redirectToRoute('showOneDetail_recettes',['id'=>$recette->getId()]);
+        }
+        else
+        {
+            return $this->redirectToRoute('showAll_recettes');
+        }
+    }
+
+    #[Route('/recettes/filtre', name: 'setFiltre_recettes')]
+    public function setFiltre(RecetteRepository $rr):Response
+    {
+        $listRecettes = $rr->findBy()
+
+        return $this->json($listRecettes);
     }
 }
