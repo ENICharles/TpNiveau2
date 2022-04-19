@@ -38,7 +38,8 @@
                     let data = JSON.parse(response);
                     //let data = JSON.stringify(response);
 
-                    {% listRecettes %}
+                    console.log(data);
+{#                    {% listRecettes %}#}
                     document.getElementById('test').innerText = data[0].nom;
                 })
 

@@ -66,8 +66,11 @@ class RecettesController extends AbstractController
     #[Route('/recettes/filtre', name: 'setFiltre_recettes')]
     public function setFiltre(RecetteRepository $rr):Response
     {
-        $listRecettes = $rr->findBy()
 
+//        $listRecettes = $rr->findBy(['nom'],['nom'=>'ASC']);
+        $listRecettes = $rr->findAll();
+
+//        dd($listRecettes);
         return $this->json($listRecettes);
     }
 }
